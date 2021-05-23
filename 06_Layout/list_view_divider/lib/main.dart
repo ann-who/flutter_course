@@ -10,7 +10,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff264653),
+        canvasColor: Color(0xff2a9d8f),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -31,16 +32,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'List view divider',
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text('List View Divider'),
+        centerTitle: true,
       ),
+      body: ListView.separated(
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text('$index'),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => Divider(
+                thickness: 5,
+                color: Color(0xff264653),
+              ),
+          itemCount: 50),
     );
   }
 }
