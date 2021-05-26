@@ -26,6 +26,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final int _maxWidth = 500;
+  final int _itemCount = 30;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,33 +41,20 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                if (constraints.maxWidth > 500) {
-                  return ListView.separated(
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          tileColor: Colors.amber,
-                          title: Text('$index'),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Divider(
-                            thickness: 5,
-                          ),
-                      itemCount: 30);
-                } else {
-                  return GridView.builder(
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          color: Colors.amber,
-                          child: Center(child: Text('$index')),
-                        );
-                      },
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1),
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 350),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 30);
-                }
+                return ListView.builder(
+                    itemCount: _itemCount,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        color: Colors.amber,
+                        child: Center(child: Text('$index')),
+                      );
+                    },
+                    padding: constraints.maxWidth <= _maxWidth
+                        ? EdgeInsets.only(bottom: 350)
+                        : EdgeInsets.zero,
+                    scrollDirection: constraints.maxWidth <= _maxWidth
+                        ? Axis.horizontal
+                        : Axis.vertical);
               }),
             ),
           ],
