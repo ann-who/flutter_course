@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+// import 'package:fluro/fluro.dart';
+import 'drawer.dart';
+import 'style.dart';
+import 'pages.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,21 +15,32 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: AppColor.primaryColor,
+        canvasColor: AppColor.accentColor,
       ),
-      home: MyHomePage(),
+      routes: {
+        AppRoutes.mainPage: (context) => MainScreen(),
+        AppRoutes.homePage: (context) => HomePage(),
+        AppRoutes.artistPage: (context) => ArtistPage(),
+      },
+      // navigatorObservers: [routeObserver],
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
+class AppRoutes {
+  static final mainPage = '/';
+  static final homePage = '/home';
+  static final artistPage = '/artist';
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MainScreen extends StatefulWidget {
+  MainScreen({Key key}) : super(key: key);
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Routes',
+              'Navigation',
             ),
           ],
         ),
       ),
+      drawer: NavDrawer(),
     );
   }
 }
