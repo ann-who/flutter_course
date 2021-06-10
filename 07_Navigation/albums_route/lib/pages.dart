@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   HomePageState createState() {
@@ -26,31 +28,36 @@ class Artist {
 
   Artist(this.name, this.link, this.about);
 
-  // factory Artist.fromJSON(
-  //   Map<String, dynamic> json,
-  // ) {
-  //   return Artist(json['name'] as String, json['link'] as String,
-  //       json['about'] as String);
-  // }
+  Artist.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        link = json['link'],
+        about = json['about'];
 }
 
 class ArtistPage extends StatefulWidget {
-  final ArtistPageController controller;
-  const ArtistPage({Key key, this.controller}) : super(key: key);
+  Future<List<Artist>> _artistsFuture;
+
+  Future<List<Artist>> fetchArtistsFromAssets(String assetsPath) async {
+    final rawJson = await rootBundle.loadString(assetsPath);
+    final parsedJson = jsonDecode(rawJson);
+
+    List<Artist> artists = [];
+    for (var jsonArtist in parsedJson) {
+      artists.add(Artist.fromJson(jsonArtist));
+    }
+    return artists;
+  }
 
   _ArtistPageState createState() {
-    return _ArtistPageState();
+    _artistsFuture = fetchArtistsFromAssets('assets/artists.json');
+    return _ArtistPageState(_artistsFuture);
   }
 }
 
 class _ArtistPageState extends State<ArtistPage> {
-  // List<Artists> artists;
-  // void _getArtists() async {
-  //   var newArtist = await widget.controller.fetchArtists();
-  //   setState(() {
-  //     artists = newArtist;
-  //   });
-  // }
+  Future<List<Artist>> _artistsFuture;
+
+  _ArtistPageState(this._artistsFuture);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +66,34 @@ class _ArtistPageState extends State<ArtistPage> {
         title: Text('Artists\' page'),
         leading: Icon(Icons.arrow_back),
       ),
-      body: ListView(),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: _artistsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Container();
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        margin: EdgeInsets.all(10),
+                        child: ListTile(
+                          title: Text(snapshot.data[index].name),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
