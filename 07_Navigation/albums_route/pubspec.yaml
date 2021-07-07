@@ -46,6 +46,9 @@ flutter:
   assets:
     - assets/artists.json
     - assets/user.jpg
+    - assets/demo/demo1.png
+    - assets/demo/demo2.png
+    - assets/demo/demo3.png
  
   #
   # For details regarding fonts from package dependencies,
