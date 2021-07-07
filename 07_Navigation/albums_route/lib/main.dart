@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:fluro/fluro.dart';
-import 'drawer.dart';
-
+// import 'string_extension.dart';
 import 'pages.dart';
 
 void main() {
@@ -15,55 +13,67 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: AppColor.primaryColor,
-        canvasColor: AppColor.accentColor,
+        primaryColor: AppColors.accentColor,
+        canvasColor: AppColors.canvaColor,
       ),
-      routes: {
-        AppRoutes.mainPage: (context) => MainScreen(),
-        AppRoutes.homePage: (context) => HomePage(),
-        AppRoutes.artistPage: (context) => ArtistPage(),
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case MainPage.routeName:
+            return MaterialPageRoute(builder: (BuildContext context) {
+              return MainPage();
+            });
+          case ArtistPage.routeName:
+            return MaterialPageRoute(builder: (BuildContext context) {
+              return ArtistPage();
+            });
+          case AboutPage.routeName:
+            final artist = settings.arguments as Artist;
+            return MaterialPageRoute(builder: (BuildContext context) {
+              return AboutPage(artist);
+            });
+            break;
+          default:
+            return MaterialPageRoute(builder: (BuildContext context) {
+              return NotFound();
+            });
+        }
       },
-      // navigatorObservers: [routeObserver],
     );
   }
 }
 
-class AppRoutes {
-  static final mainPage = '/';
-  static final homePage = '/home';
-  static final artistPage = '/artist';
+class AppColors {
+  static final Color canvaColor = Color(0xffdfe7fd);
+  static final Color accentColor = Color(0xff457b9d);
+  static final Color cardColor = Color(0xffa8dadc);
+  static final Color textColor = Color(0xff001219);
 }
 
-class AppColor extends Color {
-  AppColor(int value) : super(value);
-  static final AppColor primaryColor = AppColor(0xff706677);
-  static final AppColor accentColor = AppColor(0xffd6cfcb);
-}
+class Artist {
+  final String name;
+  final String link;
+  final String about;
 
-class MainScreen extends StatefulWidget {
-  MainScreen({Key key}) : super(key: key);
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
+  Artist(this.name, this.link, this.about);
 
-class _MainScreenState extends State<MainScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Routes'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Navigation',
-            ),
-          ],
-        ),
-      ),
-      drawer: NavDrawer(),
-    );
+  Artist.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        link = json['link'],
+        about = json['about'];
+
+  String get normalizedName {
+    List<String> bandName = name.split(' ');
+    List<String> capitalizedBandName = bandName.map((String word) {
+      String trimmedWord = word.trim();
+      if (trimmedWord.isEmpty) {
+        return '';
+      }
+
+      final String firstLetter = trimmedWord.substring(0, 1).toUpperCase();
+      final String remainingLetters = trimmedWord.substring(1);
+      return '$firstLetter$remainingLetters';
+    }).toList();
+
+    return capitalizedBandName.join(' ');
   }
 }

@@ -1,10 +1,13 @@
+import 'package:albums_route/pages.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
+// import 'main.dart';
 
 //ignore: must_be_immutable
 class NavDrawer extends StatelessWidget {
-  // const NavDrawer({ Key? key }) : super(key: key);
   String _activeRoute;
+
+  NavDrawer(this._activeRoute);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -23,19 +26,17 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.home),
             title: Text('Home'),
-            selected: _activeRoute == AppRoutes.homePage,
+            selected: _activeRoute == MainPage.routeName,
             onTap: () {
-              _activeRoute = AppRoutes.homePage;
-              Navigator.pushNamed(context, AppRoutes.homePage);
+              Navigator.pushReplacementNamed(context, MainPage.routeName);
             },
           ),
           ListTile(
             leading: Icon(Icons.music_note),
             title: Text('Artists'),
-            selected: _activeRoute == AppRoutes.artistPage,
+            selected: _activeRoute == ArtistPage.routeName,
             onTap: () {
-              _activeRoute = AppRoutes.artistPage;
-              Navigator.pushNamed(context, AppRoutes.artistPage);
+              Navigator.pushReplacementNamed(context, ArtistPage.routeName);
             },
           ),
         ],
