@@ -28,31 +28,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<String> _screenText;
+
   @override
+  void initState() {
+    super.initState();
+    _screenText = fetchFileFromAssets('assets/somedata.txt');
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Catch error'),
       ),
       body: FutureBuilder<String>(
-        future: fetchFileFromAssets('assets/somefile.txt'),
+        future: _screenText,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Center(
-                child: Text('NONE'),
-              );
-              break;
+              return Center(child: Text('NONE'));
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
-              break;
             case ConnectionState.done:
+              if (snapshot.hasError) {
+                print(snapshot.error);
+                return const Center(child: Text('File not found'));
+              }
               return SingleChildScrollView(child: Text(snapshot.data));
-              break;
             default:
-              return SingleChildScrollView(
-                child: Text('Default'),
-              );
+              return SingleChildScrollView(child: Text('Default'));
           }
         },
       ),
