@@ -10,6 +10,7 @@ class Hotel {
   final Address? address;
   final double? rating;
   final Services? services;
+  final List<String>? photos;
 
   Hotel({
     required this.uuid,
@@ -18,6 +19,7 @@ class Hotel {
     this.rating,
     this.address,
     this.services,
+    this.photos,
   });
 
   factory Hotel.fromJson(Map<String, dynamic> json) => _$HotelFromJson(json);

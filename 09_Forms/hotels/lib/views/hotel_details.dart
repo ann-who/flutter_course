@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hotels/models/hotel.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ class _HotelDetailsInfoState extends State<HotelDetailsInfo> {
   bool isLoading = false;
   bool hasError = false;
   Hotel? detailsInfo;
+  List<Hotel> hotels = [];
 
   void initState() {
     super.initState();
@@ -26,11 +28,13 @@ class _HotelDetailsInfoState extends State<HotelDetailsInfo> {
     });
     try {
       final response =
-          await http.get(Uri.parse('https://run.mocky.io/v3/${uuid}'));
+          await http.get(Uri.parse('https://run.mocky.io/v3/$uuid'));
+
       var data = json.decode(response.body) as Map<String, dynamic>;
       detailsInfo = Hotel.fromJson(data);
     } catch (err) {
       hasError = true;
+      print(404);
     }
     setState(() {
       isLoading = false;
@@ -56,49 +60,115 @@ class _HotelDetailsInfoState extends State<HotelDetailsInfo> {
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : hasError
-              ? Text('Контент временно недоступен')
-              : Padding(
+              ? Center(
+                  child: Text('Контент временно недоступен'),
+                )
+              : SingleChildScrollView(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Image(
-                        image:
-                            AssetImage('assets/images/${detailsInfo?.poster}'),
-                        fit: BoxFit.fitWidth,
+                      CarouselSlider(
+                        items: detailsInfo!.photos!
+                            .map(
+                              (item) => Container(
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/images/$item',
+                                  ),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        options: CarouselOptions(
+                          enlargeCenterPage: true,
+                        ),
                       ),
                       SizedBox(height: 10.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           if (detailsInfo!.address?.country != null)
-                            Text('Страна: ${detailsInfo!.address!.country}'),
+                            Row(
+                              children: [
+                                Text('Страна:'),
+                                Text(
+                                  ' ${detailsInfo!.address!.country}',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
                           if (detailsInfo!.address?.city != null)
-                            Text('Город: ${detailsInfo!.address!.city}'),
+                            Row(
+                              children: [
+                                Text('Город:'),
+                                Text(
+                                  ' ${detailsInfo!.address!.city}',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
                           if (detailsInfo!.address?.street != null)
-                            Text('Улица: ${detailsInfo!.address!.street}'),
-                          Text('Рейтинг: ${detailsInfo?.rating.toString()}'),
+                            Row(
+                              children: [
+                                Text('Улица:'),
+                                Text(
+                                  ' ${detailsInfo!.address!.street}',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ],
+                            ),
+                          Row(
+                            children: [
+                              Text('Рейтинг:'),
+                              Text(
+                                ' ${detailsInfo!.rating.toString()}',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                       SizedBox(height: 30.0),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('Сервисы'),
+                          Text(
+                            'Сервисы',
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
                           SizedBox(height: 10.0),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                        'Платные: \n${detailsInfo!.services!.paid}'),
+                                      'Платные',
+                                      style:
+                                          Theme.of(context).textTheme.headline2,
+                                    ),
+                                    Text(
+                                        '\n${detailsInfo!.services!.paid!.join('\n')}'),
                                   ],
                                 ),
                               ),
+                              SizedBox(width: 30.0),
                               Flexible(
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                        'Бесплатные: \n${detailsInfo!.services!.free}'),
+                                      'Бесплатные',
+                                      style:
+                                          Theme.of(context).textTheme.headline2,
+                                    ),
+                                    Text(
+                                        '\n${detailsInfo!.services!.free!.join('\n')}'),
                                   ],
                                 ),
                               ),

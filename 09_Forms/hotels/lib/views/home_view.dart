@@ -13,6 +13,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool isLoading = false;
+  bool isListView = true;
   List<Hotel> hotels = [];
 
   @override
@@ -39,60 +40,124 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.list)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.grid_view)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isListView = true;
+                });
+              },
+              icon: Icon(Icons.list)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isListView = false;
+                });
+              },
+              icon: Icon(Icons.grid_view)),
         ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView(
-              children: <Widget>[
-                ...hotels.map((hotel) {
-                  return Card(
-                    elevation: 2.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                            child: Image(
-                              image:
-                                  AssetImage('assets/images/${hotel.poster}'),
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
+          : isListView
+              ? ListView(
+                  children: <Widget>[
+                    ...hotels.map((hotel) {
+                      return Card(
+                        elevation: 2.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(hotel.name),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/detailsInfo',
-                                    arguments: hotel.uuid,
-                                  );
-                                },
-                                child: Text('Подробнее'),
-                              )
-                            ],
-                          ),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/images/${hotel.poster}'),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(hotel.name),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/detailsInfo',
+                                        arguments: hotel.uuid,
+                                      );
+                                    },
+                                    child: Text('Подробнее'),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ],
-            ),
+                      );
+                    }).toList(),
+                  ],
+                )
+              : GridView.count(
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    ...hotels.map((hotel) {
+                      return Card(
+                        elevation: 2.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: double.maxFinite,
+                              height: 100,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/images/${hotel.poster}'),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(hotel.name, textAlign: TextAlign.center),
+                            Spacer(),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(Size(
+                                200,
+                                50,
+                              ))),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/detailsInfo',
+                                  arguments: hotel.uuid,
+                                );
+                              },
+                              child: Text('Подробнее'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ],
+                ),
     );
   }
 }
