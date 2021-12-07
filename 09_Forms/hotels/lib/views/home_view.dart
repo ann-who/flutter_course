@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hotels/models/hotel.dart';
+import 'package:hotels/screens/hotels_grid.dart';
+import 'package:hotels/screens/hotels_list.dart';
 import 'package:http/http.dart' as http;
 
 class HomeView extends StatefulWidget {
@@ -12,27 +15,24 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  bool isLoading = false;
   bool isListView = true;
-  List<Hotel> hotels = [];
+  Future<List<Hotel>>? _hotelsFuture;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    _hotelsFuture = getHotels();
   }
 
-  getData() async {
-    setState(() {
-      isLoading = true;
-    });
-    final response = await http.get(Uri.parse(
+  Future<List<Hotel>> getHotels() async {
+    var response = await http.get(Uri.parse(
         'https://run.mocky.io/v3/ac888dc5-d193-4700-b12c-abb43e289301'));
+    if (response.statusCode != HttpStatus.ok) {
+      return Future.error('Не удалось получить список отелей');
+    }
     var data = json.decode(response.body) as List;
-    hotels.addAll(data.map<Hotel>((hotel) => Hotel.fromJson(hotel)));
-    setState(() {
-      isLoading = false;
-    });
+    var hotels = (data.map<Hotel>((hotel) => Hotel.fromJson(hotel))).toList();
+    return hotels;
   }
 
   @override
@@ -56,108 +56,22 @@ class _HomeViewState extends State<HomeView> {
               icon: Icon(Icons.grid_view)),
         ],
       ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : isListView
-              ? ListView(
-                  children: <Widget>[
-                    ...hotels.map((hotel) {
-                      return Card(
-                        elevation: 2.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/${hotel.poster}'),
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(hotel.name),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/detailsInfo',
-                                        arguments: hotel.uuid,
-                                      );
-                                    },
-                                    child: Text('Подробнее'),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ],
-                )
-              : GridView.count(
-                  crossAxisCount: 2,
-                  children: <Widget>[
-                    ...hotels.map((hotel) {
-                      return Card(
-                        elevation: 2.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              width: double.maxFinite,
-                              height: 100,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/${hotel.poster}'),
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            Text(hotel.name, textAlign: TextAlign.center),
-                            Spacer(),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(Size(
-                                200,
-                                50,
-                              ))),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/detailsInfo',
-                                  arguments: hotel.uuid,
-                                );
-                              },
-                              child: Text('Подробнее'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ],
-                ),
+      body: FutureBuilder(
+        future: _hotelsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final hotels = snapshot.data as List<Hotel>;
+            return isListView ? HotelsListView(hotels) : HotelsGridView(hotels);
+          } else if (snapshot.hasError) {
+            print('${snapshot.error}');
+            return Center(
+              child: Text('${snapshot.error}'),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }
