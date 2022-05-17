@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simple_app/resources/app_constants.dart';
+import 'package:simple_app/resources/app_images.dart';
+import 'package:simple_app/widgets/buttons.dart';
 
 class LeftDrawer extends StatelessWidget {
   LeftDrawer();
@@ -9,8 +12,8 @@ class LeftDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             child: CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/images/user.jpg'),
+              radius: WidgetsSettings.avatarRadius,
+              backgroundImage: AssetImage(AppImages.user),
             ),
           ),
           ListTile(
@@ -39,31 +42,13 @@ class LeftDrawer extends StatelessWidget {
           ),
           Expanded(
             child: SafeArea(
-              minimum: EdgeInsets.all(20),
+              minimum: EdgeInsets.all(WidgetsSettings.padding),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Выход',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xfffcd5ce),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Регистрация',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xfffcd5ce),
-                    ),
-                  ),
+                  AppTextButton(title: 'Выход'),
+                  AppTextButton(title: 'Регистрация')
                 ],
               ),
             ),
@@ -84,8 +69,8 @@ class RightDrawer extends StatelessWidget {
         children: [
           Center(
             child: CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/images/user.jpg'),
+              radius: WidgetsSettings.avatarRadius,
+              backgroundImage: AssetImage(AppImages.user),
             ),
           ),
           Text('Name Lastname'),
