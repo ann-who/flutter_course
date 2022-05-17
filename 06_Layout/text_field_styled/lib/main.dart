@@ -12,6 +12,41 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        hintColor: Colors.grey[500],
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: AppResources.searchFieldTextStyleColor,
+          suffixIconColor: AppResources.borderColor,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppResources.borderColor,
+              width: AppResources.borderWidth,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppResources.borderRadius),
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppResources.borderColor,
+              width: AppResources.borderWidth,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppResources.borderRadius),
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppResources.borderColor,
+              width: AppResources.borderWidth,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(AppResources.borderRadius),
+            ),
+          ),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppResources.borderColor,
+        ),
       ),
       home: MyHomePage(),
     );
@@ -19,13 +54,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
-final searchFieldStyle = TextStyle(color: Colors.purple[400]);
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -38,32 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Theme(
-              data: ThemeData(
-                primaryColor: Colors.purple[400],
-                hintColor: Colors.grey[500],
-              ),
-              child: Container(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.purple[400], width: 2),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(18.0)),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(18.0)),
-                    ),
-                    labelText: 'Search',
-                    hintText: 'Введите значение',
-                    suffixIcon: Icon(
-                      Icons.search,
-                    ),
-                    helperText: 'Поле для поиска заметок',
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  hintText: 'Введите значение',
+                  suffixIcon: Icon(
+                    Icons.search,
                   ),
+                  helperText: 'Поле для поиска заметок',
                 ),
               ),
             ),
@@ -72,4 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+class AppResources {
+  static const Color borderColor = Colors.purple;
+  static const TextStyle searchFieldTextStyleColor =
+      TextStyle(color: Colors.purple);
+
+  static const double borderWidth = 2.0;
+  static const double borderRadius = 18.0;
 }
