@@ -21,19 +21,19 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<String> _screenText;
+  Future<String>? _screenText;
 
   @override
   void initState() {
     super.initState();
-    _screenText = fetchFileFromAssets('assets/somedata.txt');
+    _screenText = fetchFileFromAssets('assets/data.txt');
   }
 
   Widget build(BuildContext context) {
