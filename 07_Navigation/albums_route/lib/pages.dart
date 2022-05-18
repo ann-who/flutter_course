@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
 class ArtistPage extends StatefulWidget {
   static const routeName = '/artist';
 
-  late final Future<List<Artist>> artistsFuture;
+  Future<List<Artist>>? artistsFuture;
 
   Future<List<Artist>> fetchArtistsFromAssets(String assetsPath) async {
     final rawJson = await rootBundle.loadString(assetsPath);
@@ -54,6 +54,7 @@ class ArtistPage extends StatefulWidget {
     return artists;
   }
 
+  @override
   _ArtistPageState createState() {
     artistsFuture = fetchArtistsFromAssets('assets/artists.json');
     return _ArtistPageState();
