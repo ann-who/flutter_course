@@ -1,10 +1,8 @@
 import 'package:albums_route/pages.dart';
 import 'package:flutter/material.dart';
-// import 'main.dart';
 
-//ignore: must_be_immutable
 class NavDrawer extends StatelessWidget {
-  String _activeRoute;
+  final String _activeRoute;
 
   NavDrawer(this._activeRoute);
 

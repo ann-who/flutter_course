@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:albums_route/app_resources.dart';
+import 'package:albums_route/artist_model.dart';
 import 'drawer.dart';
-import 'main.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/';
@@ -20,25 +23,13 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          // mainAxisAlignment: MainAxisAlignment.center,
           child: Card(
             color: AppColors.canvaColor,
             elevation: 0,
             margin: EdgeInsets.fromLTRB(15, 15, 15, 0),
             child: Text(
-              """   Домашняя музыкальная страница - это возможность создавать и воспроизводить виртуальные концерты, живые записи или создавать собственные музыкальные инструменты. 
-    
-  Домашняя музыкальная страница может включать музыку, сохраненную в вашем компьютере, такую как MP3 или WAV или может быть записана во время концерта или живой записи. 
-    
-  Если у вас нет звука с компакт-диска, вы можете его создать.
-    
-  В домашней музыкальной странице могут использоваться аудио или MIDI файлы.""",
+              AppTexts.homePageText,
               textAlign: TextAlign.left,
-              style: TextStyle(
-                color: AppColors.textColor,
-                fontFamily: 'Montserrat',
-                fontSize: 16,
-              ),
             ),
           ),
         ),
@@ -47,10 +38,10 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-//ignore: must_be_immutable
 class ArtistPage extends StatefulWidget {
   static const routeName = '/artist';
-  Future<List<Artist>> artistsFuture;
+
+  late final Future<List<Artist>> artistsFuture;
 
   Future<List<Artist>> fetchArtistsFromAssets(String assetsPath) async {
     final rawJson = await rootBundle.loadString(assetsPath);
@@ -84,7 +75,7 @@ class _ArtistPageState extends State<ArtistPage> {
             Expanded(
               child: FutureBuilder(
                 future: widget.artistsFuture,
-                builder: (context, snapshot) {
+                builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Container();
                   }
@@ -93,8 +84,6 @@ class _ArtistPageState extends State<ArtistPage> {
                     itemBuilder: (BuildContext context, int index) {
                       var artist = snapshot.data[index] as Artist;
                       return Card(
-                        color: AppColors.canvaColor,
-                        elevation: 0,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
                           child: ListTile(
@@ -144,7 +133,6 @@ class AboutPage extends StatefulWidget {
 }
 
 class AboutPageState extends State<AboutPage> {
-  // final Artist _artist;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,17 +147,10 @@ class AboutPageState extends State<AboutPage> {
       ),
       body: SingleChildScrollView(
         child: Card(
-          color: AppColors.canvaColor,
-          elevation: 0,
           margin: EdgeInsets.all(15),
           child: Text(
             '${widget.artist.about}',
             textAlign: TextAlign.left,
-            style: TextStyle(
-              color: AppColors.textColor,
-              fontFamily: 'Montserrat',
-              fontSize: 16,
-            ),
           ),
         ),
       ),

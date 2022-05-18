@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'string_extension.dart';
+
+import 'package:albums_route/app_resources.dart';
+import 'package:albums_route/artist_model.dart';
 import 'pages.dart';
 
 void main() {
@@ -15,6 +17,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.accentColor,
         canvasColor: AppColors.canvaColor,
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: AppColors.textColor,
+            fontFamily: 'Montserrat',
+            fontSize: 16,
+          ),
+        ),
+        cardTheme: CardTheme(
+          color: AppColors.canvaColor,
+          elevation: 0,
+        ),
       ),
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
@@ -31,7 +44,7 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (BuildContext context) {
               return AboutPage(artist);
             });
-            break;
+
           default:
             return MaterialPageRoute(builder: (BuildContext context) {
               return NotFound();
@@ -39,41 +52,5 @@ class MyApp extends StatelessWidget {
         }
       },
     );
-  }
-}
-
-class AppColors {
-  static final Color canvaColor = Color(0xffdfe7fd);
-  static final Color accentColor = Color(0xff457b9d);
-  static final Color cardColor = Color(0xffa8dadc);
-  static final Color textColor = Color(0xff001219);
-}
-
-class Artist {
-  final String name;
-  final String link;
-  final String about;
-
-  Artist(this.name, this.link, this.about);
-
-  Artist.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        link = json['link'],
-        about = json['about'];
-
-  String get normalizedName {
-    List<String> bandName = name.split(' ');
-    List<String> capitalizedBandName = bandName.map((String word) {
-      String trimmedWord = word.trim();
-      if (trimmedWord.isEmpty) {
-        return '';
-      }
-
-      final String firstLetter = trimmedWord.substring(0, 1).toUpperCase();
-      final String remainingLetters = trimmedWord.substring(1);
-      return '$firstLetter$remainingLetters';
-    }).toList();
-
-    return capitalizedBandName.join(' ');
   }
 }
