@@ -13,6 +13,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black, width: 2),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black, width: 2),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                bottomLeft: Radius.circular(8.0)),
+          ),
+        ),
       ),
       home: MyHomePage(title: 'Load file'),
     );
@@ -20,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -30,7 +44,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _textController = TextEditingController();
-  Future<String> _screenText;
+  Future<String>? _screenText;
 
   @override
   void dispose() {
@@ -60,20 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           controller: _textController,
                           expands: false,
                           decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8.0),
-                                  bottomLeft: Radius.circular(8.0)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8.0),
-                                  bottomLeft: Radius.circular(8.0)),
-                            ),
                             hintText: 'Enter file name',
                           ),
                         ),
