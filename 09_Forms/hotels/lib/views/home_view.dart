@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:hotels/models/hotel.dart';
 import 'package:hotels/screens/hotels_grid.dart';
 import 'package:hotels/screens/hotels_list.dart';
-import 'package:http/http.dart' as http;
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);

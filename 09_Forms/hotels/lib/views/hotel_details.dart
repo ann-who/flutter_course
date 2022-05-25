@@ -58,9 +58,9 @@ class _HotelDetailsInfoState extends State<HotelDetailsInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Slides(detailsInfo.photos),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   AddressAndRaiting(detailsInfo.address, detailsInfo.rating),
-                  SizedBox(height: 30.0),
+                  const SizedBox(height: 30.0),
                   HotelServices(
                     detailsInfo.services,
                   ),

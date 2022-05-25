@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotels/models/hotel.dart';
+import 'package:hotels/resources/theme.dart';
 
 class HotelsGridView extends StatelessWidget {
   final List<Hotel> hotels;
@@ -21,8 +22,8 @@ class HotelsGridView extends StatelessWidget {
                   height: 100,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+                      topLeft: Radius.circular(AppConstants.cardRadius),
+                      topRight: Radius.circular(AppConstants.cardRadius),
                     ),
                     child: Image(
                       image: AssetImage('assets/images/${hotel.poster}'),

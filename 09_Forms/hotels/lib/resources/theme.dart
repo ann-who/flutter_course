@@ -8,7 +8,7 @@ class ThemeManager {
       cardTheme: CardTheme(
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(AppConstants.cardRadius),
         ),
       ),
       textTheme: TextTheme(
@@ -22,11 +22,16 @@ class ThemeManager {
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),
-        bodyText1: TextStyle(
-          fontWeight: FontWeight.w500,
+        bodyText2: TextStyle(
+          fontSize: 12,
           color: Colors.black,
         ),
       ),
     );
   }
+}
+
+class AppConstants {
+  static const double textPadding = 10.0;
+  static const double cardRadius = 10.0;
 }

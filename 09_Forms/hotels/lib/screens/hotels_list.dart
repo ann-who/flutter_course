@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotels/models/hotel.dart';
+import 'package:hotels/resources/theme.dart';
 
 class HotelsListView extends StatelessWidget {
   final List<Hotel> hotels;
@@ -16,20 +17,20 @@ class HotelsListView extends StatelessWidget {
             return Card(
               child: Column(
                 children: <Widget>[
-                  Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                      ),
-                      child: Image(
-                        image: AssetImage('assets/images/${hotel.poster}'),
-                        fit: BoxFit.fitWidth,
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(AppConstants.cardRadius),
+                      topRight: Radius.circular(AppConstants.cardRadius),
+                    ),
+                    child: Image(
+                      image: AssetImage('assets/images/${hotel.poster}'),
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: AppConstants.textPadding,
+                        right: AppConstants.textPadding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
