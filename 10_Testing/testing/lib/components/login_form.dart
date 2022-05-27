@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:testing/utils/validate_email.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key key}) : super(key: key);
+  LoginForm({Key? key}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -12,6 +12,14 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool successMessage = false;
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+      setState(() {
+        successMessage = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +28,10 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            key: Key('loginEmailField'),
             validator: (value) {
               if (value == '') return 'Введите email';
-              if (!validateEmail(value))
+              if (!validateEmail(value!))
                 return 'Поле email заполнено не корректно';
               return null;
             },
@@ -30,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(labelText: 'Email'),
           ),
           TextFormField(
+            key: Key('loginPhoneField'),
             validator: (value) {
               if (value == '') return 'Введите телефон';
               return null;
@@ -37,19 +47,13 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(labelText: 'Phone'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
-              WhitelistingTextInputFormatter.digitsOnly
+              FilteringTextInputFormatter.digitsOnly
             ],
           ),
-          RaisedButton(
+          ElevatedButton(
+            key: Key('loginSubmitButton'),
             child: Text('Отправить'),
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                setState(() {
-                  successMessage = true;
-                });
-              }
-            },
+            onPressed: _submit,
           ),
           if (successMessage) Text('Добро пожаловать'),
         ],
