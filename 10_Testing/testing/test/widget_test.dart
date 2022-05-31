@@ -26,6 +26,7 @@ void main() {
       expect(find.byKey(Key('loginEmailField')), findsOneWidget);
       expect(find.byKey(Key('loginPhoneField')), findsOneWidget);
       expect(find.byKey(Key('loginSubmitButton')), findsOneWidget);
+      expect(find.byKey(Key('loginOrSignUpButton')), findsOneWidget);
 
       await tester.enterText(
           find.byKey(Key('loginEmailField')), 'ann@test.com');
@@ -37,6 +38,22 @@ void main() {
       await tester.tap(find.byKey(Key('loginSubmitButton')));
       await tester.pump();
       expect(find.text('Добро пожаловать'), findsOneWidget);
+
+      await tester.tap(find.byKey(Key('loginOrSignUpButton')));
+      await tester.pump();
+      expect(find.text('Регистрация'), findsOneWidget);
+
+      await tester.tap(find.byKey(Key('loginOrSignUpButton')));
+      await tester.pump();
+      expect(find.text('Вход'), findsOneWidget);
+
+      await tester.tap(find.byKey(Key('loginOrSignUpButton')));
+      await tester.pump();
+      expect(find.text('Еще нет аккаунта?'), findsOneWidget);
+
+      await tester.tap(find.byKey(Key('loginOrSignUpButton')));
+      await tester.pump();
+      expect(find.text('Уже есть аккаунт?'), findsOneWidget);
     });
 
     testWidgets('Register form widgets', (WidgetTester tester) async {

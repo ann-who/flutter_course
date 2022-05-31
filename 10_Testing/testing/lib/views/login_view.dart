@@ -43,8 +43,8 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                       _formType == FormType.login
-                          ? LoginForm()
-                          : RegisterForm(),
+                          ? LoginForm(key: Key('LoginForm'))
+                          : RegisterForm(key: Key('RegisterForm')),
                     ],
                   ),
                 ),
@@ -54,9 +54,10 @@ class _LoginViewState extends State<LoginView> {
                     Text(
                       _formType == FormType.login
                           ? 'Уже есть аккаунт?'
-                          : 'Еще нет аккаунта? ',
+                          : 'Еще нет аккаунта?',
                     ),
                     TextButton(
+                      key: Key('loginOrSignUpButton'),
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
