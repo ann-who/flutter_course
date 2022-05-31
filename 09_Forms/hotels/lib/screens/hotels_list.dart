@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotels/components/hotel_card.dart';
 import 'package:hotels/models/hotel.dart';
+import 'package:hotels/resources/theme.dart';
 
 class HotelsListView extends StatelessWidget {
   final List<Hotel> hotels;
@@ -14,7 +14,43 @@ class HotelsListView extends StatelessWidget {
         shrinkWrap: true,
         children: <Widget>[
           ...hotels.map((hotel) {
-            return HotelListCard(hotel: hotel);
+            return Card(
+              child: Column(
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(AppConstants.cardRadius),
+                      topRight: Radius.circular(AppConstants.cardRadius),
+                    ),
+                    child: Image(
+                      image: AssetImage('assets/images/${hotel.poster}'),
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: AppConstants.textPadding,
+                        right: AppConstants.textPadding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(hotel.name),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/detailsInfo',
+                              arguments: hotel.uuid,
+                            );
+                          },
+                          child: Text('Подробнее'),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
           }).toList(),
         ],
       ),
