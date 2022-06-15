@@ -3,7 +3,7 @@ class Space {
   final String image;
   final String description;
 
-  Space({this.id, this.image, this.description});
+  Space({required this.id, required this.image, required this.description});
 }
 
 final List<Space> spaces = [
