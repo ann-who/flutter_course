@@ -28,28 +28,27 @@ class _HomeViewState extends State<HomeView> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: ListView(
+      body: ListView.builder(
         shrinkWrap: true,
-        children: <Widget>[
-          ...spaces.map((space) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: WidgetSettings.screenPadding),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DetailsScreen(
-                        details: space,
-                      ),
+        itemCount: spaces.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: WidgetSettings.screenPadding),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DetailsScreen(
+                      details: spaces[index],
                     ),
-                  );
-                },
-                child: SpaceCard(space: space),
-              ),
-            );
-          }).toList(),
-        ],
+                  ),
+                );
+              },
+              child: SpaceCard(space: spaces[index]),
+            ),
+          );
+        },
       ),
     );
   }
