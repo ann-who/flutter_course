@@ -1,4 +1,22 @@
 include: package:flutter_lints/flutter.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+analyzer:
+  exclude:
+    - '**/*.config.dart'
+  errors:
+    missing_return: error
+  plugins:
+    - dart_code_metrics
+
+linter:
+  rules:
+    - always_declare_return_types: true
+    - avoid_relative_lib_imports: true
+    - hash_and_equals: true
+    - prefer_single_quotes: true
+    - require_trailing_commas: true
+
+dart_code_metrics:
+  metrics:
+    number-of-methods: 5
+    number-of-parameters: 3

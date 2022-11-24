@@ -1,12 +1,12 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 
 import 'package:data_layer/src/models/animal_model.dart';
-import 'package:dio/dio.dart';
 
 class AnimalDataSource {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'https://zoo-animal-api.herokuapp.com/animals',
+      baseUrl: 'https://zoo-animal-api.herokuapp.com',
       connectTimeout: 3000,
       receiveTimeout: 5000,
     ),
@@ -14,8 +14,9 @@ class AnimalDataSource {
 
   Future<ZooAnimal> getAnimal() async {
     Response response;
+    response = await _dio.get('/animals/rand');
     try {
-      response = await _dio.get('/rand');
+      response = await _dio.get('/animals/rand');
     } on DioError catch (e) {
       if (e.response == null) {
         rethrow;
@@ -30,6 +31,11 @@ class AnimalDataSource {
       rethrow;
     }
     var result = response.data;
-    return result.fromJson();
+
+    return ZooAnimal(
+      name: result['name'],
+      animalType: result['animal_type'],
+      imageUrl: result['image_link'],
+    );
   }
 }

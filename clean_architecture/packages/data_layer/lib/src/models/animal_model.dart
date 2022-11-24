@@ -1,5 +1,5 @@
 // ignore_for_file: invalid_annotation_target
-
+import 'dart:core';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'animal_model.freezed.dart';
