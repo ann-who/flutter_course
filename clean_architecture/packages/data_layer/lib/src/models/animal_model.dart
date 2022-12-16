@@ -6,13 +6,13 @@ part 'animal_model.freezed.dart';
 part 'animal_model.g.dart';
 
 @freezed
-class ZooAnimal with _$ZooAnimal {
-  const factory ZooAnimal({
-    required String name,
-    @JsonKey(name: 'animal_type') required String animalType,
-    @JsonKey(name: 'image_link') required String imageUrl,
-  }) = _ZooAnimal;
+class AnimalModel with _$AnimalModel {
+  const factory AnimalModel({
+    @JsonKey(name: 'Species Name') required String name,
+    @JsonKey(name: 'Scientific Name') required String scientificName,
+    @JsonKey(name: 'Species Illustration Photo') required String photo,
+  }) = _AnimalModel;
 
-  factory ZooAnimal.fromJson(Map<String, Object?> json) =>
-      _$ZooAnimalFromJson(json);
+  factory AnimalModel.fromJson(Map<String, Object?> json) =>
+      _$AnimalModelFromJson(json);
 }

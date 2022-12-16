@@ -22,7 +22,7 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
       ),
     );
 
-    ZooAnimal animal;
+    AnimalModel animal;
 
     try {
       animal = await animalRepository.getAnimal();

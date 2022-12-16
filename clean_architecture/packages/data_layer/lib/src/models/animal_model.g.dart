@@ -6,15 +6,16 @@ part of 'animal_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ZooAnimal _$$_ZooAnimalFromJson(Map<String, dynamic> json) => _$_ZooAnimal(
-      name: json['name'] as String,
-      animalType: json['animal_type'] as String,
-      imageUrl: json['image_link'] as String,
+_$_AnimalModel _$$_AnimalModelFromJson(Map<String, dynamic> json) =>
+    _$_AnimalModel(
+      name: json['Species Name'] as String,
+      scientificName: json['Scientific Name'] as String,
+      photo: json['Species Illustration Photo'] as String,
     );
 
-Map<String, dynamic> _$$_ZooAnimalToJson(_$_ZooAnimal instance) =>
+Map<String, dynamic> _$$_AnimalModelToJson(_$_AnimalModel instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'animal_type': instance.animalType,
-      'image_link': instance.imageUrl,
+      'Species Name': instance.name,
+      'Scientific Name': instance.scientificName,
+      'Species Illustration Photo': instance.photo,
     };

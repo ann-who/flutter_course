@@ -7,20 +7,20 @@ enum AnimalLoadingState {
 }
 
 class AnimalState {
-  final ZooAnimal animal;
+  final AnimalModel animal;
   final AnimalLoadingState loadingState;
 
   const AnimalState({
-    this.animal = const ZooAnimal(
-      animalType: '',
+    this.animal = const AnimalModel(
       name: '',
-      imageUrl: '',
+      scientificName: '',
+      photo: '',
     ),
     this.loadingState = AnimalLoadingState.initial,
   });
 
   AnimalState copyWith({
-    ZooAnimal? animal,
+    AnimalModel? animal,
     AnimalLoadingState? loadingState,
   }) {
     return AnimalState(

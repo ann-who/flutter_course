@@ -1,22 +1,22 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
-
+import 'dart:math';
 import 'package:data_layer/src/models/animal_model.dart';
+import 'package:dio/dio.dart';
 
 class AnimalDataSource {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'https://zoo-animal-api.herokuapp.com',
+      baseUrl: 'https://www.fishwatch.gov/api',
       connectTimeout: 3000,
       receiveTimeout: 5000,
     ),
   );
 
-  Future<ZooAnimal> getAnimal() async {
+  Future<AnimalModel> getAnimal() async {
     Response response;
-    response = await _dio.get('/animals/rand');
+    response = await _dio.get('/species');
     try {
-      response = await _dio.get('/animals/rand');
+      response = await _dio.get('/species');
     } on DioError catch (e) {
       if (e.response == null) {
         rethrow;
@@ -31,11 +31,13 @@ class AnimalDataSource {
       rethrow;
     }
     var result = response.data;
+    final random = Random();
+    var animal = result[random.nextInt(result.length)];
 
-    return ZooAnimal(
-      name: result['name'],
-      animalType: result['animal_type'],
-      imageUrl: result['image_link'],
+    return AnimalModel(
+      name: animal['Species Name'],
+      scientificName: animal['Scientific Name'],
+      photo: animal['Species Illustration Photo']['src'],
     );
   }
 }

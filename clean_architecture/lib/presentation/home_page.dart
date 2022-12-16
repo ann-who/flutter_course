@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Image.network(
-                        context.read<AnimalBloc>().state.animal.imageUrl,
+                        state.animal.photo,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return Center(
@@ -60,14 +60,14 @@ class MyHomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        context.read<AnimalBloc>().state.animal.name,
+                        state.animal.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Text(context.read<AnimalBloc>().state.animal.animalType),
+                      Text(state.animal.scientificName),
                       const SizedBox(height: 8.0),
                       ElevatedButton(
                         onPressed: () {
@@ -76,7 +76,7 @@ class MyHomePage extends StatelessWidget {
                               .add(const GetAnimalButtonPressed());
                         },
                         child: const Text(
-                          'Let\'s look at another animal!',
+                          'Let\'s look at another fish!',
                         ),
                       ),
                     ],
@@ -86,7 +86,7 @@ class MyHomePage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Press the button to see an animal'),
+                  const Text('Press the button to see a fish'),
                   ElevatedButton(
                     onPressed: () {
                       context
@@ -94,7 +94,7 @@ class MyHomePage extends StatelessWidget {
                           .add(const GetAnimalButtonPressed());
                     },
                     child: const Text(
-                      'Find an animal!',
+                      'Find Nemo!',
                     ),
                   ),
                 ],
