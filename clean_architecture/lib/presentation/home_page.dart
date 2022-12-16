@@ -39,10 +39,11 @@ class MyHomePage extends StatelessWidget {
               if (state.loadingState == AnimalLoadingState.loading) {
                 return const CircularProgressIndicator();
               } else if (state.loadingState == AnimalLoadingState.loaded) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Image.network(
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Image.network(
                         state.animal.photo,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -58,29 +59,29 @@ class MyHomePage extends StatelessWidget {
                         errorBuilder: (context, error, stackTrace) =>
                             const Text('Sorry, no image :('),
                       ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        state.animal.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      state.animal.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
                       ),
-                      const SizedBox(height: 8.0),
-                      Text(state.animal.scientificName),
-                      const SizedBox(height: 8.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<AnimalBloc>()
-                              .add(const GetAnimalButtonPressed());
-                        },
-                        child: const Text(
-                          'Let\'s look at another fish!',
-                        ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(state.animal.scientificName),
+                    const SizedBox(height: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<AnimalBloc>()
+                            .add(const GetAnimalButtonPressed());
+                      },
+                      child: const Text(
+                        'Let\'s look at another fish!',
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               }
               return Column(
