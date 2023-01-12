@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:simple_state_management/presentation_layer/catalog/catalog_page.dart';
 
+import 'package:simple_state_management/presentation_layer/cart/cart_page.dart';
+import 'package:simple_state_management/presentation_layer/catalog/catalog_page.dart';
+import 'package:simple_state_management/presentation_layer/corders/orders_page.dart';
+import 'package:simple_state_management/presentation_layer/utils/app_colors.dart';
 import 'package:simple_state_management/presentation_layer/utils/app_icons.dart';
 
 void main() {
@@ -15,7 +18,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.pink,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: AppColors.secondaryPink,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: AppColors.primaryPink,
+          elevation: 0.0,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w900),
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.white,
+        ),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700),
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -33,18 +49,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 1;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+
+  static const List<Widget> pages = <Widget>[
+    OrdersPage(),
     CatalogPage(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    CartPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -56,39 +65,25 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFFF85C60), Colors.black.withOpacity(.1)])),
-        child: BottomNavigationBar(
-          // backgroundColor: Colors.pink,
-          elevation: 0.0,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900),
-          showSelectedLabels: true,
-          showUnselectedLabels: false,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: AppIcon(path: AppIconPath.orderIcon),
-              label: '.',
-            ),
-            BottomNavigationBarItem(
-              icon: AppIcon(path: AppIconPath.homeIcon),
-              label: '.',
-            ),
-            BottomNavigationBarItem(
-              icon: AppIcon(path: AppIconPath.cartIcon),
-              label: '.',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
-          onTap: _onItemTapped,
-        ),
+      backgroundColor: AppColors.primaryPink,
+      body: pages.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: AppIcon(path: AppIconPath.orderIcon),
+            label: '.',
+          ),
+          BottomNavigationBarItem(
+            icon: AppIcon(path: AppIconPath.homeIcon),
+            label: '.',
+          ),
+          BottomNavigationBarItem(
+            icon: AppIcon(path: AppIconPath.cartIcon),
+            label: '.',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }

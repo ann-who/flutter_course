@@ -38,3 +38,31 @@ class PageDecoration extends StatelessWidget {
     );
   }
 }
+
+class ScreenSize {
+  static double width = 1.0;
+  static double height = 1.0;
+
+  void init(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    width = mediaQueryData.size.width;
+    height = mediaQueryData.size.height;
+  }
+}
+
+class Spacing {
+  static double medium = 16.0;
+  static double height = 1.0;
+}
+
+abstract class AppText {
+  static const TextStyle header1 = TextStyle(
+    fontSize: 28.0,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle header2 = TextStyle(
+    fontSize: 22.0,
+    fontWeight: FontWeight.w300,
+  );
+}
