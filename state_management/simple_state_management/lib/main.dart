@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:simple_state_management/presentation_layer/cart/cart_page.dart';
 import 'package:simple_state_management/presentation_layer/catalog/catalog_page.dart';
-import 'package:simple_state_management/presentation_layer/corders/orders_page.dart';
+import 'package:simple_state_management/presentation_layer/orders/orders_page.dart';
 import 'package:simple_state_management/presentation_layer/utils/app_colors.dart';
 import 'package:simple_state_management/presentation_layer/utils/app_icons.dart';
 

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 import 'package:simple_state_management/presentation_layer/utils/app_decorations.dart';
@@ -8,17 +10,19 @@ class CatalogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenSize().init(context);
     return PageDecoration(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(),
-          SizedBox(height: Spacing.medium),
+          // TODO implement items search
+          // TextFormField(),
+          // SizedBox(height: Spacing.medium),
           const Text('TRENDING PRODUCTS'),
           SizedBox(height: Spacing.medium),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width,
+            height: ScreenSize.height * 0.3,
+            width: ScreenSize.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,

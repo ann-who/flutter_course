@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:simple_state_management/presentation_layer/utils/app_decorations.dart';
-import 'package:simple_state_management/presentation_layer/utils/app_icons.dart';
 
-class OrdersPage extends StatelessWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+class EmptyPage extends StatelessWidget {
+  final String subtitle;
 
-  @override
-  Widget build(BuildContext context) {
-    ScreenSize().init(context);
-    return const PageDecoration(
-      child: EmptyOrdersList(),
-    );
-  }
-}
-
-class EmptyOrdersList extends StatelessWidget {
-  const EmptyOrdersList({
+  const EmptyPage({
     Key? key,
+    required this.subtitle,
   }) : super(key: key);
 
   @override
@@ -33,8 +23,8 @@ class EmptyOrdersList extends StatelessWidget {
             style: AppText.header1,
           ),
           SizedBox(height: Spacing.medium),
-          const Text(
-            'Place your first order',
+          Text(
+            subtitle,
             style: AppText.header2,
           ),
         ],
