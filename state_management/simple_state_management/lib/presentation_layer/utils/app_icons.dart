@@ -4,10 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AppIconPath {
   static const String cartIcon = 'assets/cart.svg';
   static const String homeIcon = 'assets/home.svg';
+  static const String catalogIcon = 'assets/catalog.svg';
   static const String orderIcon = 'assets/order.svg';
   static const String filterIcon = 'assets/filter.svg';
   static const String searchIcon = 'assets/search.svg';
-  static const String item = 'assets/items_images/1.png';
+  static const String addIcon = 'assets/add.svg';
+  static const String removeIcon = 'assets/remove.svg';
 }
 
 class AppIcon extends StatelessWidget {

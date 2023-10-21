@@ -1,13 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:simple_state_management/business_logic_layer/cart_notifier.dart';
+import 'package:simple_state_management/business_logic_layer/catalog_notifier.dart';
+import 'package:simple_state_management/business_logic_layer/order_notifier.dart';
+import 'package:simple_state_management/business_logic_layer/search_notifier.dart';
+
+import 'package:simple_state_management/data_layer/data_source/products_data_source.dart';
+import 'package:simple_state_management/data_layer/repository/products_repository_implementation.dart';
 
 import 'package:simple_state_management/presentation_layer/cart/cart_page.dart';
 import 'package:simple_state_management/presentation_layer/catalog/catalog_page.dart';
 import 'package:simple_state_management/presentation_layer/orders/orders_page.dart';
 import 'package:simple_state_management/presentation_layer/utils/app_colors.dart';
 import 'package:simple_state_management/presentation_layer/utils/app_icons.dart';
+import 'package:simple_state_management/presentation_layer/utils/app_strings.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CatalogNotifier(
+            productsRepository: ProductsRepositoryImplementation(
+              productsDataSource: ProductsDataSource(),
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(create: (context) => CartNotifier()),
+        ChangeNotifierProvider(create: (context) => OrderNotifier()),
+        ChangeNotifierProvider(
+          create: (context) => SearchNotifier(
+            productsRepository: ProductsRepositoryImplementation(
+              productsDataSource: ProductsDataSource(),
+            ),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,8 +47,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var catalogProvider = context.read<CatalogNotifier>();
+    catalogProvider.init();
+
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: AppColors.secondaryPink,
@@ -30,18 +64,16 @@ class MyApp extends StatelessWidget {
           selectedItemColor: Colors.white,
         ),
         textTheme: const TextTheme(
-          bodyText1: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700),
+          bodyMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700),
         ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -71,15 +103,15 @@ class _MyHomePageState extends State<MyHomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: AppIcon(path: AppIconPath.orderIcon),
-            label: '.',
+            label: AppString.orders,
           ),
           BottomNavigationBarItem(
-            icon: AppIcon(path: AppIconPath.homeIcon),
-            label: '.',
+            icon: AppIcon(path: AppIconPath.catalogIcon),
+            label: AppString.catalog,
           ),
           BottomNavigationBarItem(
             icon: AppIcon(path: AppIconPath.cartIcon),
-            label: '.',
+            label: AppString.cart,
           ),
         ],
         currentIndex: _selectedIndex,

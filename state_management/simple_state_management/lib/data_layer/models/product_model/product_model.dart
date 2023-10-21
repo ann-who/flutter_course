@@ -12,15 +12,10 @@ class ProductModel with _$ProductModel {
     required String description,
     required int price,
     required String brand,
-    required ProductCategory category,
-    required List<String> images,
+    required String category,
+    required String imageUrl,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, Object?> json) =>
       _$ProductModelFromJson(json);
-}
-
-enum ProductCategory {
-  fragrances,
-  skincare,
 }

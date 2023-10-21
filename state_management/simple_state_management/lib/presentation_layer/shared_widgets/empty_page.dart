@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:simple_state_management/presentation_layer/utils/app_decorations.dart';
+import 'package:simple_state_management/presentation_layer/utils/app_strings.dart';
 
 class EmptyPage extends StatelessWidget {
   final String subtitle;
@@ -18,10 +19,7 @@ class EmptyPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'It\'s empty here :(',
-            style: AppText.header1,
-          ),
+          const Text(AppString.emptyPage, style: AppText.header1),
           SizedBox(height: Spacing.medium),
           Text(
             subtitle,

@@ -8,9 +8,23 @@ class ProductsRepositoryImplementation implements ProductsRepository {
   const ProductsRepositoryImplementation({required this.productsDataSource});
 
   @override
-  Future<List<ProductModel>> getSkincare() async {
-    List<ProductModel> result = await productsDataSource.getSkincare();
+  Future<List<String>> getCategories() async {
+    List<String> result = await productsDataSource.getCategories();
 
+    return result;
+  }
+
+  @override
+  Future<List<ProductModel>> getCategory(String categoryName) async {
+    List<ProductModel> result =
+        await productsDataSource.getCategory(categoryName);
+
+    return result;
+  }
+
+  @override
+  Future<List<ProductModel>> searchProduct(String name) async {
+    List<ProductModel> result = await productsDataSource.searchProduct(name);
     return result;
   }
 }

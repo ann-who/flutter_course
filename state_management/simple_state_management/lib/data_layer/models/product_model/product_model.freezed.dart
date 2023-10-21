@@ -25,8 +25,8 @@ mixin _$ProductModel {
   String get description => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
   String get brand => throw _privateConstructorUsedError;
-  ProductCategory get category => throw _privateConstructorUsedError;
-  List<String> get images => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,8 +46,8 @@ abstract class $ProductModelCopyWith<$Res> {
       String description,
       int price,
       String brand,
-      ProductCategory category,
-      List<String> images});
+      String category,
+      String imageUrl});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? price = null,
     Object? brand = null,
     Object? category = null,
-    Object? images = null,
+    Object? imageUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,21 +95,21 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ProductCategory,
-      images: null == images
-          ? _value.images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ProductModelCopyWith<$Res>
+abstract class _$$ProductModelImplCopyWith<$Res>
     implements $ProductModelCopyWith<$Res> {
-  factory _$$_ProductModelCopyWith(
-          _$_ProductModel value, $Res Function(_$_ProductModel) then) =
-      __$$_ProductModelCopyWithImpl<$Res>;
+  factory _$$ProductModelImplCopyWith(
+          _$ProductModelImpl value, $Res Function(_$ProductModelImpl) then) =
+      __$$ProductModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -118,16 +118,16 @@ abstract class _$$_ProductModelCopyWith<$Res>
       String description,
       int price,
       String brand,
-      ProductCategory category,
-      List<String> images});
+      String category,
+      String imageUrl});
 }
 
 /// @nodoc
-class __$$_ProductModelCopyWithImpl<$Res>
-    extends _$ProductModelCopyWithImpl<$Res, _$_ProductModel>
-    implements _$$_ProductModelCopyWith<$Res> {
-  __$$_ProductModelCopyWithImpl(
-      _$_ProductModel _value, $Res Function(_$_ProductModel) _then)
+class __$$ProductModelImplCopyWithImpl<$Res>
+    extends _$ProductModelCopyWithImpl<$Res, _$ProductModelImpl>
+    implements _$$ProductModelImplCopyWith<$Res> {
+  __$$ProductModelImplCopyWithImpl(
+      _$ProductModelImpl _value, $Res Function(_$ProductModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -139,9 +139,9 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? price = null,
     Object? brand = null,
     Object? category = null,
-    Object? images = null,
+    Object? imageUrl = null,
   }) {
-    return _then(_$_ProductModel(
+    return _then(_$ProductModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -165,30 +165,29 @@ class __$$_ProductModelCopyWithImpl<$Res>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ProductCategory,
-      images: null == images
-          ? _value._images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_ProductModel implements _ProductModel {
-  const _$_ProductModel(
+class _$ProductModelImpl implements _ProductModel {
+  const _$ProductModelImpl(
       {required this.id,
       required this.title,
       required this.description,
       required this.price,
       required this.brand,
       required this.category,
-      required final List<String> images})
-      : _images = images;
+      required this.imageUrl});
 
-  factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ProductModelFromJson(json);
+  factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductModelImplFromJson(json);
 
   @override
   final int id;
@@ -201,25 +200,20 @@ class _$_ProductModel implements _ProductModel {
   @override
   final String brand;
   @override
-  final ProductCategory category;
-  final List<String> _images;
+  final String category;
   @override
-  List<String> get images {
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_images);
-  }
+  final String imageUrl;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, title: $title, description: $description, price: $price, brand: $brand, category: $category, images: $images)';
+    return 'ProductModel(id: $id, title: $title, description: $description, price: $price, brand: $brand, category: $category, imageUrl: $imageUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ProductModel &&
+            other is _$ProductModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -228,23 +222,24 @@ class _$_ProductModel implements _ProductModel {
             (identical(other.brand, brand) || other.brand == brand) &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            const DeepCollectionEquality().equals(other._images, _images));
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, price,
-      brand, category, const DeepCollectionEquality().hash(_images));
+  int get hashCode => Object.hash(
+      runtimeType, id, title, description, price, brand, category, imageUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
-      __$$_ProductModelCopyWithImpl<_$_ProductModel>(this, _$identity);
+  _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
+      __$$ProductModelImplCopyWithImpl<_$ProductModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProductModelToJson(
+    return _$$ProductModelImplToJson(
       this,
     );
   }
@@ -257,11 +252,11 @@ abstract class _ProductModel implements ProductModel {
       required final String description,
       required final int price,
       required final String brand,
-      required final ProductCategory category,
-      required final List<String> images}) = _$_ProductModel;
+      required final String category,
+      required final String imageUrl}) = _$ProductModelImpl;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
-      _$_ProductModel.fromJson;
+      _$ProductModelImpl.fromJson;
 
   @override
   int get id;
@@ -274,11 +269,11 @@ abstract class _ProductModel implements ProductModel {
   @override
   String get brand;
   @override
-  ProductCategory get category;
+  String get category;
   @override
-  List<String> get images;
+  String get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
+  _$$ProductModelImplCopyWith<_$ProductModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

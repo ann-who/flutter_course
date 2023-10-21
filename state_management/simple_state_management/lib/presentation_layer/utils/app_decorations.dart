@@ -20,17 +20,29 @@ class PageDecoration extends StatelessWidget {
             bottomRight: Radius.circular(30),
           ),
         ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: Spacing.medium,
+            left: Spacing.medium,
+            right: Spacing.medium,
+          ),
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-              child: child,
+            ),
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: Spacing.big),
+                    child: child,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -51,7 +63,9 @@ class ScreenSize {
 }
 
 class Spacing {
+  static double big = 32.0;
   static double medium = 16.0;
+  static double small = 8.0;
   static double height = 1.0;
 }
 
@@ -63,6 +77,21 @@ abstract class AppText {
 
   static const TextStyle header2 = TextStyle(
     fontSize: 22.0,
+    fontWeight: FontWeight.w300,
+  );
+
+  static const TextStyle bodyText1 = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle bodyText2 = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w300,
+  );
+
+  static const TextStyle caption = TextStyle(
+    fontSize: 14.0,
     fontWeight: FontWeight.w300,
   );
 }

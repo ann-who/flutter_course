@@ -6,30 +6,24 @@ part of 'product_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
-    _$_ProductModel(
+_$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
+    _$ProductModelImpl(
       id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
       price: json['price'] as int,
       brand: json['brand'] as String,
-      category: $enumDecode(_$ProductCategoryEnumMap, json['category']),
-      images:
-          (json['images'] as List<dynamic>).map((e) => e as String).toList(),
+      category: json['category'] as String,
+      imageUrl: json['imageUrl'] as String,
     );
 
-Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
+Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
       'price': instance.price,
       'brand': instance.brand,
-      'category': _$ProductCategoryEnumMap[instance.category]!,
-      'images': instance.images,
+      'category': instance.category,
+      'imageUrl': instance.imageUrl,
     };
-
-const _$ProductCategoryEnumMap = {
-  ProductCategory.fragrances: 'fragrances',
-  ProductCategory.skincare: 'skincare',
-};
