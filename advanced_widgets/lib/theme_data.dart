@@ -20,8 +20,11 @@ class CustomTheme {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Color(0xFFffafcc),
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Color(0xFFffafcc),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Color(0xFFffafcc)),
+        foregroundColor: MaterialStatePropertyAll(Color(0xFF343a40)),
+      ),
     ),
   );
 
@@ -45,8 +48,11 @@ class CustomTheme {
       backgroundColor: Color(0xFF283618),
       foregroundColor: Color(0xFFFEFAE0),
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Color(0xFF283618),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Color(0xFF283618)),
+        foregroundColor: MaterialStatePropertyAll(Color(0xFFFEFAE0)),
+      ),
     ),
   );
 
@@ -70,8 +76,11 @@ class CustomTheme {
       backgroundColor: Color(0xFF62B6CB),
       foregroundColor: Color(0xFFBEE9E8),
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Color(0xFF62B6CB),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Color(0xFF62B6CB)),
+        foregroundColor: MaterialStatePropertyAll(Color(0xFF1B4965)),
+      ),
     ),
   );
 
@@ -84,7 +93,7 @@ class CustomTheme {
     ),
     appBarTheme: const AppBarTheme(
       color: Color(0xFFE2711D),
-      iconTheme: IconThemeData(color: Color(0xFFCC5803)),
+      iconTheme: IconThemeData(color: Color(0xFF212529)),
     ),
     scaffoldBackgroundColor: const Color(0xFFFFC971),
     drawerTheme: DrawerThemeData(
@@ -95,8 +104,11 @@ class CustomTheme {
       backgroundColor: Color(0xFFE2711D),
       foregroundColor: Color(0xFFFFC971),
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Color(0xFFE2711D),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Color(0xFFE2711D)),
+        foregroundColor: MaterialStatePropertyAll(Color(0xFFFFC971)),
+      ),
     ),
   );
 
@@ -120,8 +132,11 @@ class CustomTheme {
       backgroundColor: Color(0xFFE3D5CA),
       foregroundColor: Color(0xFF6c757d),
     ),
-    buttonTheme: const ButtonThemeData(
-      buttonColor: Color(0xFFE3D5CA),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Color(0xFFE3D5CA)),
+        foregroundColor: MaterialStatePropertyAll(Color(0xFF343a40)),
+      ),
     ),
   );
 }
