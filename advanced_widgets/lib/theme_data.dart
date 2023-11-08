@@ -17,14 +17,16 @@ class CustomTheme {
       backgroundColor: const Color(0xFFbde0fe),
       scrimColor: const Color(0xFFbde0fe).withOpacity(0.2),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFFffafcc),
-    ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(Color(0xFFffafcc)),
         foregroundColor: MaterialStatePropertyAll(Color(0xFF343a40)),
       ),
+    ),
+    sliderTheme: SliderThemeData(
+      thumbColor: const Color(0xFFcdb4db),
+      activeTrackColor: const Color(0xFFcdb4db).withOpacity(0.8),
+      inactiveTrackColor: const Color(0xFFcdb4db).withOpacity(0.2),
     ),
   );
 
@@ -44,15 +46,16 @@ class CustomTheme {
       backgroundColor: const Color(0xFF606C38),
       scrimColor: const Color(0xFF606C38).withOpacity(0.2),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFF283618),
-      foregroundColor: Color(0xFFFEFAE0),
-    ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(Color(0xFF283618)),
         foregroundColor: MaterialStatePropertyAll(Color(0xFFFEFAE0)),
       ),
+    ),
+    sliderTheme: SliderThemeData(
+      thumbColor: const Color(0xFF283618),
+      activeTrackColor: const Color(0xFF283618).withOpacity(0.8),
+      inactiveTrackColor: const Color(0xFF283618).withOpacity(0.2),
     ),
   );
 
@@ -72,15 +75,16 @@ class CustomTheme {
       backgroundColor: const Color(0xFF5FA8D3),
       scrimColor: const Color(0xFFCAE9FF).withOpacity(0.2),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFF62B6CB),
-      foregroundColor: Color(0xFFBEE9E8),
-    ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(Color(0xFF62B6CB)),
         foregroundColor: MaterialStatePropertyAll(Color(0xFF1B4965)),
       ),
+    ),
+    sliderTheme: SliderThemeData(
+      thumbColor: const Color(0xFF62B6CB),
+      activeTrackColor: const Color(0xFF62B6CB).withOpacity(0.8),
+      inactiveTrackColor: const Color(0xFF62B6CB).withOpacity(0.2),
     ),
   );
 
@@ -100,15 +104,16 @@ class CustomTheme {
       backgroundColor: const Color(0xFFFFB627),
       scrimColor: const Color(0xFFFFB627).withOpacity(0.2),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFFE2711D),
-      foregroundColor: Color(0xFFFFC971),
-    ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(Color(0xFFE2711D)),
         foregroundColor: MaterialStatePropertyAll(Color(0xFFFFC971)),
       ),
+    ),
+    sliderTheme: SliderThemeData(
+      thumbColor: const Color(0xFFE2711D),
+      activeTrackColor: const Color(0xFFE2711D).withOpacity(0.8),
+      inactiveTrackColor: const Color(0xFFE2711D).withOpacity(0.2),
     ),
   );
 
@@ -128,15 +133,16 @@ class CustomTheme {
       backgroundColor: const Color(0xFFD5BDAF),
       scrimColor: const Color(0xFFD5BDAF).withOpacity(0.2),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFFE3D5CA),
-      foregroundColor: Color(0xFF6c757d),
-    ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStatePropertyAll(Color(0xFFE3D5CA)),
         foregroundColor: MaterialStatePropertyAll(Color(0xFF343a40)),
       ),
+    ),
+    sliderTheme: SliderThemeData(
+      thumbColor: const Color(0xFFD6CCC2),
+      activeTrackColor: const Color(0xFFD6CCC2).withOpacity(0.8),
+      inactiveTrackColor: const Color(0xFFD6CCC2).withOpacity(0.2),
     ),
   );
 }
