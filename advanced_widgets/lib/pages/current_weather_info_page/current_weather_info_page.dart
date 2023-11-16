@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:advanced_widgets/pages/change_weather_page/widgets/weather_icon.dart';
+import 'package:advanced_widgets/pages/current_weather_info_page/widgets/text_decoration.dart';
 import 'package:flutter/material.dart';
 
 enum Weather { sunny, cloudy, rainy }
@@ -72,6 +73,7 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
+
     _textController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -79,10 +81,12 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
 
     _sizeAnimation =
         Tween<double>(begin: 100.0, end: 400.0).animate(_iconCcontroller);
+
     _positionAnimation = Tween<Offset>(
       begin: const Offset(290.0, 0.0),
       end: const Offset(0.0, 100.0),
     ).animate(_iconCcontroller);
+
     _opacityAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(_textController);
 
@@ -92,6 +96,7 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
   @override
   void dispose() {
     _iconCcontroller.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -105,6 +110,11 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
 
   @override
   Widget build(BuildContext context) {
+    String currentWeatherDescription = weatherDescription.entries
+        .where((element) => element.key == currentWeather)
+        .first
+        .value;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Current Weather Info'),
@@ -117,6 +127,7 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
             onTap: startAnimation,
             child: Stack(
               children: [
+                // Weather icon
                 Positioned(
                   left: _positionAnimation.value.dx,
                   top: _positionAnimation.value.dy,
@@ -128,14 +139,49 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
                     height: _sizeAnimation.value,
                   ),
                 ),
+                // Weather description
                 Positioned(
                   left: 30.0,
-                  bottom: MediaQuery.of(context).size.height / 5,
+                  bottom: MediaQuery.of(context).size.height / 7,
                   child: Opacity(
                     opacity: _opacityAnimation.value,
-                    child: Text(
-                      'rrr',
-                      style: TextStyle(fontSize: 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50.0,
+                          child: InnerShadowText(
+                            text: currentWeatherDescription,
+                            textStyle: TextStyle(
+                              fontSize: 46.0,
+                              letterSpacing: 8.0,
+                              color: getTextColor(currentWeather),
+                            ),
+                            shadowColor:
+                                getTextColor(currentWeather).withOpacity(0.5),
+                            offset: const Offset(-4, 1),
+                            blurRadius: 10.0,
+                          ),
+                        ),
+                        const SizedBox(height: 20.0),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50.0,
+                          child: InnerShadowText(
+                            text: '$currentDegrees degrees',
+                            textStyle: TextStyle(
+                              color: getTextColor(currentWeather),
+                              fontSize: 40.0,
+                            ),
+                            shadowColor:
+                                getTextColor(currentWeather).withOpacity(0.5),
+                            offset: const Offset(2, 2),
+                            blurRadius: 5.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -147,11 +193,23 @@ class _CurrentWeatherInfoPageState extends State<CurrentWeatherInfoPage>
     );
   }
 
+  Color getTextColor(Weather currentWeather) {
+    if (currentWeather == Weather.rainy) {
+      return Colors.blue;
+    } else if (currentWeather == Weather.cloudy) {
+      return Colors.grey;
+    } else {
+      return Colors.orange;
+    }
+  }
+
   void startAnimation() {
     if (_iconCcontroller.isCompleted) {
       _iconCcontroller.reverse();
+      _textController.reverse();
     } else {
       _iconCcontroller.forward();
+      _textController.forward();
     }
   }
 }
