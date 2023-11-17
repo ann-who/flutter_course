@@ -118,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 ),
               Expanded(
                 child: GridView.count(
+                  physics: const BouncingScrollPhysics(),
                   crossAxisCount: 2,
                   children: List.generate(
                     8,
