@@ -1,5 +1,4 @@
 import 'package:app_theme/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,14 +18,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
   int _currentTabIndex = 0;
   bool _isLoading = false;
   List<Map<String, Object>> _chips = [
@@ -67,15 +66,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            title: Text('Messages'),
+            label: 'Messages',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profile'),
+            label: 'Profile',
           )
         ],
       ),
@@ -87,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             children: <Widget>[
               Text(
                 'Список товаров',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -101,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text('Заказать товар'),
                       onPressed: () async {
                         setState(() => _isLoading = true);
@@ -163,8 +162,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               item['isSelect'] = v;
                             });
                           },
-                          selected: item['isSelect'],
-                          label: Text(item['name']),
+                          selected: item['isSelect'] as bool,
+                          label: Text(item['name'] as String),
                         ),
                       )
                       .toList(),
@@ -185,23 +184,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   onTap: () {
                     showDialog(
                       context: context,
-                      child: AlertDialog(
-                        actions: [
-                          RaisedButton(
-                            child: Text('Да'),
-                            onPressed: () async {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          RaisedButton(
-                            child: Text('Нет'),
-                            onPressed: () async {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                        title: Text('Сменить аватар'),
-                      ),
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          actions: [
+                            ElevatedButton(
+                              child: Text('Да'),
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ElevatedButton(
+                              child: Text('Нет'),
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                          title: Text('Сменить аватар'),
+                        );
+                      },
                     );
                   },
                   child: CircleAvatar(
