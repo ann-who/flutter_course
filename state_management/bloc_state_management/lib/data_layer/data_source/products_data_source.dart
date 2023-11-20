@@ -50,16 +50,7 @@ class ProductsDataSource {
       List<ProductModel> categoryProducts = [];
 
       for (var element in list) {
-        var product = ProductModel(
-          id: element['id'],
-          title: element['title'],
-          description: element['description'],
-          price: element['price'],
-          brand: element['brand'],
-          category: element['category'],
-          imageUrl: element['images'].toList().first,
-        );
-        categoryProducts.add(product);
+        categoryProducts.add(ProductModel.fromJson(element));
       }
 
       return categoryProducts;
@@ -88,16 +79,7 @@ class ProductsDataSource {
       List<ProductModel> foundedProducts = [];
 
       for (var element in list) {
-        var product = ProductModel(
-          id: element['id'],
-          title: element['title'],
-          description: element['description'],
-          price: element['price'],
-          brand: element['brand'],
-          category: element['category'],
-          imageUrl: element['images'].toList().first,
-        );
-        foundedProducts.add(product);
+        foundedProducts.add(ProductModel.fromJson(element));
       }
 
       return foundedProducts;
