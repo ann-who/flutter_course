@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:task_1/home_page/home_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,71 +15,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        inputDecorationTheme: const InputDecorationTheme(
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          hintStyle: TextStyle(color: Colors.black38),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.deepPurple),
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            gapPadding: 0.0,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black38),
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            gapPadding: 0.0,
+          ),
+        ),
       ),
       home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 8.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Header 1'),
-              SizedBox(height: 16.0),
-              Text('Header 2'),
-              SizedBox(height: 16.0),
-              SingleChildScrollView(
-                child: Text('html'),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: MediaQuery.of(context).viewInsets,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Divider(height: 2.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
-              child: Row(
-                children: [
-                  Expanded(child: TextFormField()),
-                  const SizedBox(width: 16.0),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Load'),
-                  )
-                ],
-              ),
-            ),
-            const Text('Platform: todo'),
-            const SizedBox(height: 16.0),
-          ],
-        ),
-      ),
     );
   }
 }
