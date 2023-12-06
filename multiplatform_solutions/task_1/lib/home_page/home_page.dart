@@ -14,11 +14,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController urlController = TextEditingController();
-  late Future<http.Response> result;
 
   @override
   void initState() {
-    result = _getUrlInfo();
+    _getUrlInfo();
     super.initState();
   }
 
@@ -30,16 +29,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: FutureBuilder(
-            future: result,
+            future: _getUrlInfo(),
             builder: (context, snapshot) {
               bool isWaiting =
                   snapshot.connectionState == ConnectionState.waiting;
               bool isError = snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasError &&
+                  (snapshot.hasError || snapshot.data == null) &&
                   urlController.text.isNotEmpty;
               bool isLoaded =
                   snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData;
+                      snapshot.hasData &&
+                      urlController.text.isNotEmpty;
 
               if (isWaiting) {
                 return const Center(
@@ -84,11 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
     urlController.text = value;
   }
 
-  Future<http.Response> _getUrlInfo() async {
-    setState(() {
-      result = http.get(Uri.parse(urlController.text));
-    });
-
+  Future<http.Response?> _getUrlInfo() async {
+    var uri = Uri.parse(urlController.text);
+    Future<http.Response>? result;
+    if (uri.isAbsolute) {
+      setState(() {
+        result = http.get(uri);
+      });
+    } else {
+      setState(() {
+        result = null;
+      });
+    }
     return result;
   }
 }
