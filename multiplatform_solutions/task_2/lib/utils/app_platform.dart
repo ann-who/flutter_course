@@ -31,4 +31,6 @@ abstract class AppPlatform {
   }
 
   static String get platform => _getPlatform();
+
+  static bool get isWeb => _getPlatform() == CustomPlatform.web.name;
 }

@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:task_2/home_page/widgets/bottom_load_bar.dart';
 import 'package:task_2/home_page/widgets/loaded_body.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -17,29 +16,8 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController urlController = TextEditingController();
   late String? url;
 
-  WebViewController controller = WebViewController();
-
   @override
   void initState() {
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            LinearProgressIndicator(
-              value: progress.toDouble(),
-            );
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {
-            const Text(
-              'Something went wrong. Please try again or paste another URL',
-            );
-          },
-        ),
-      );
-
     super.initState();
   }
 
@@ -84,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 return LoadedBody(
                   title: title,
                   corsHeader: corsHeader,
-                  controller: controller,
+                  url: url!,
                 );
               } else {
                 return const Center(
@@ -111,11 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Future<http.Response>? result;
     if (uri.isAbsolute) {
       setState(() {
+        url = uri.toString();
         result = http.get(uri);
       });
-      controller.loadRequest(Uri.parse(urlController.text));
     } else {
       setState(() {
+        url = null;
         result = null;
       });
     }
