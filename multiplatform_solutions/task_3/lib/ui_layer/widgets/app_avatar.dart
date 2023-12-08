@@ -14,10 +14,15 @@ class AppAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      path,
-      width: width ?? 150.0,
-      height: height ?? 150.0,
+    return ClipRRect(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: const BorderRadius.horizontal(left: Radius.circular(30.0)),
+      child: Image.asset(
+        path,
+        width: width ?? 150.0,
+        height: height ?? 150.0,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }
