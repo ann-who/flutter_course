@@ -23,7 +23,9 @@ class ContactPopOver {
   static Future popover(BuildContext context) async {
     await showPopover(
       context: context,
+      radius: 24.0,
       width: MediaQuery.of(context).size.width * 0.3,
+      direction: PopoverDirection.left,
       bodyBuilder: (context) => const ContactActionsBody(),
     );
   }
