@@ -1,5 +1,8 @@
+import 'package:firebase/business_logic_layer/purchase_bloc/purchase.dart';
 import 'package:firebase/data_layer/data_source/firebase_login_data_source.dart';
+import 'package:firebase/data_layer/data_source/firebase_purchases_data_source.dart';
 import 'package:firebase/data_layer/repository/login_repository_impl.dart';
+import 'package:firebase/data_layer/repository/purchases_repository_impl.dart';
 import 'package:firebase/ui_layer/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +26,13 @@ void main() async {
             ),
           ),
         ),
+        BlocProvider(
+          create: (context) => PurchaseBloc(
+            purchasesRepository: PurchasesRepositoryImplementation(
+              purchasesDataSource: FirebasePurchasesDataSource(),
+            ),
+          )..add(PurchasesListLoaded()),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -38,6 +48,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(color: Colors.yellow),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: MaterialStateColor.resolveWith(
